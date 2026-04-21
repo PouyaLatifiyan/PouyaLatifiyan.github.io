@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pouya Latifiyan - Researcher in Safe Robotics & AI">
+    <title>Pouya Latifiyan | Aerospace Engineer & AI Researcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--bg-light);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .tagline {
+            font-size: 1.3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .contact-info a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.3em;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cv-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .cv-download:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        /* Education & Work */
+        .item {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .item-subtitle {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .item-date {
+            color: var(--text-light);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .item ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        .item li {
+            margin: 8px 0;
+            color: var(--text-light);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .skill-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Publications */
+        .publication {
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .publication-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .publication-authors {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .publication-venue {
+            color: var(--primary-color);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        /* Projects */
+        .project {
+            padding: 25px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .project-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Awards */
+        .award {
+            padding: 15px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .award-title {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .award-date {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+
+            .item-header {
+                flex-direction: column;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header, .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .cv-download, .social-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="profile.jpg" alt="Pouya Latifiyan" class="profile-img" onerror="this.style.display='none'">
+            <h1>Pouya Latifiyan</h1>
+            <p class="tagline">Researcher in Aerospace Intelligent systems, space robots, and AI</p>
+            
+            <div class="contact-info">
+                <a href="mailto:Pouya@BUAA.edu.cn">
+                    <i class="fas fa-envelope"></i> Pouya@BUAA.edu.cn
+                </a>
+                <a href="tel:+8619817409712">
+                    <i class="fas fa-phone"></i> 
+                </a>
+                <span><i class="fas fa-map-marker-alt"></i> Hangzhou, China</span>
+                <span><i class="fas fa-globe"></i> Iranian Nationality</span>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/pouya-latifiyan/" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/PouyaLatifiyan" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://scholar.google.com/citations?user=k05C_IgAAAAJ&hl=en" target="_blank" title="Google Scholar">
+                    <i class="fas fa-graduation-cap"></i>
+                </a>
+                <a href="https://www.researchgate.net/profile/Pouya-Latifiyan" target="_blank" title="ResearchGate">
+                    <i class="fab fa-researchgate"></i>
+                </a>
+            </div>
+
+            <a href="CV.pdf" download class="cv-download">
+                <i class="fas fa-download"></i>
+                Download My CV
+            </a>
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-graduation-cap"></i>
+                Education
+            </h2>
+            
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">M.Eng in Aerospace (Space Technology Applications)</div>
+                        <div class="item-subtitle">Beihang University, Beijing, China</div>
+                    </div>
+                    <div class="item-date">Sep 2024 – Current | GPA: 3.14/4.0</div>
+                </div>
+                <ul>
+                    <li><strong>Thesis:</strong> Single-Frame Optical Trail Imagery-Based Angular Velocity Estimation for Spacecraft</li>
+                    <li><strong>Focus:</strong> Robustness under partial observability, Uncertainty Quantification</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">B.Eng in Electrical Engineering (Aviation Telecommunications)</div>
+                        <div class="item-subtitle">Civil Aviation Technology College, Tehran, Iran</div>
+                    </div>
+                    <div class="item-date">Sep 2020 – Jul 2024</div>
+                </div>
+                <ul>
+                    <li><strong>Thesis:</strong> Satellite Internet in the Aviation Industry</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-briefcase"></i>
+                Work Experience
+            </h2>
+            
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Head of Research Assistants & Celestia Team Lead</div>
+                        <div class="item-subtitle">SHE Orbit</div>
+                    </div>
+                    <div class="item-date">Sep 2025 – Present</div>
+                </div>
+                <ul>
+                    <li>Leading research on <strong>Reinforcement Learning</strong> for Secure Collision Avoidance in LEO Satellite Systems under Cybersecurity constraints</li>
+                    <li>Developing algorithms for safe autonomy in space robotics</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">ICT Engineer Trainee</div>
+                        <div class="item-subtitle">Iran Airports and Air Navigation Company, Tehran</div>
+                    </div>
+                    <div class="item-date">Feb 2024 – Jul 2024</div>
+                </div>
+                <ul>
+                    <li>Internship in ATC communication & AI systems at ICAO-affiliated aviation authority</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Citizen Scientist</div>
+                        <div class="item-subtitle">European Space Agency (ESA), Cologne, Germany</div>
+                    </div>
+                    <div class="item-date">Jun 2023 – Feb 2024</div>
+                </div>
+                <ul>
+                    <li>Neurophysiological study on cosmic electromagnetic radiation impact using EEG data analysis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-tools"></i>
+                Technical Skills
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h4><i class="fas fa-robot"></i> AI & Control</h4>
+                    <p>Safe Reinforcement Learning, Deep Learning (CNNs, GANs, Transformers), Model Predictive Control (MPC), Uncertainty Quantification, Reachability Analysis</p>
+                </div>
+                <div class="skill-card">
+                    <h4><i class="fas fa-code"></i> Programming</h4>
+                    <p>Python (PyTorch, NumPy), C++, MATLAB, ROS (Robot Operating System)</p>
+                </div>
+                <div class="skill-card">
+                    <h4><i class="fas fa-eye"></i> Computer Vision</h4>
+                    <p>YOLO, SSD, U-Net, OpenCV, MMDetection3d</p>
+                </div>
+                <div class="skill-card">
+                    <h4><i class="fas fa-rocket"></i> Spacecraft Control</h4>
+                    <p>Attitude Dynamics, Orbital Mechanics, CubeSATs, Trajectory Optimization</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Publications -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-file-alt"></i>
+                Publications
+            </h2>
+            
+            <div class="publication">
+                <div class="publication-title">Domain Randomization for Adversarial Robustness in Orbital Collision Avoidance: A Deep Reinforcement Learning Approach</div>
+                <div class="publication-authors"><strong>Pouya Latifiyan</strong>, Aparna Dongale, Maria Chowdhury, Lucky Bose</div>
+                <div class="publication-venue">International Conference on Guidance, Navigation and Control (ICGNC) - Under Review (2026)</div>
+            </div>
+
+            <div class="publication">
+                <div class="publication-title">VR-LunaNav: A VR-Computer Vision Testbed for Wearable Visual Navigation Aids in Lunar Surface EVAs</div>
+                <div class="publication-authors"><strong>Pouya Latifiyan</strong>, Zhao Danpei, Bo Yuan</div>
+                <div class="publication-venue">2026 Academic Readings on Cosmonautics. DOI: 10.5281/zenodo.19434090</div>
+            </div>
+
+            <div class="publication">
+                <div class="publication-title">Onboard Computer Vision for Spacecraft: Real-Time Earth Disaster Monitoring and Resilient Space Operations</div>
+                <div class="publication-authors"><strong>Pouya Latifiyan</strong>, Zhao Danpei</div>
+                <div class="publication-venue">UN GEONOW 2025. DOI: 10.13140/RG.2.2.17160.07680</div>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-project-diagram"></i>
+                Key Projects
+            </h2>
+            
+            <div class="project">
+                <div class="project-title">Mahbot1 Space Robot (NASA Astrobee)</div>
+                <ul>
+                    <li>Implemented autonomous perception and control pipelines on real hardware</li>
+                    <li>Integrated lightweight CNNs with ROS for real-time object localization in microgravity</li>
+                    <li>Demonstrated <strong>safe human-robot interaction</strong> and robustness in dynamic environments</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-title">NASA Impact Visual Analysis System (NIVAS) - Best Code Award Winner</div>
+                <ul>
+                    <li>Developed interactive asteroid-impact simulator using real-world NASA and USGS data</li>
+                    <li>Won Best Code Award at NASA Space Apps Challenge Tokyo 2025</li>
+                </ul>
+                <a href="https://github.com/lunex-project-2025/NIVAS" target="_blank" class="project-link">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+
+        <!-- Awards -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i>
+                Honours & Awards
+            </h2>
+            
+            <div class="award">
+                <div class="award-title">NASA Space Apps Challenge - Tokyo Event: Best Code Award "Code for Hodogaya"</div>
+                <div class="award-date">October 2025</div>
+            </div>
+
+            <div class="award">
+                <div class="award-title">Iranian Mathematical Olympiad: Selected in pre-selection stage of national team</div>
+                <div class="award-date">July 2017</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Pouya Latifiyan. Last Updated: April 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
