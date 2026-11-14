@@ -1,7 +1,7 @@
 # PouyaLatifiyan.github.io
 Professional CV and Portfolio Website - Pouya Latifiyan
 
-English uses the root URL. Persian, Arabic, Chinese and French use /fa/, /ar/, /zh/ and /fr/. Each page is static HTML.
+The root URL is a language entrance. The English homepage uses /en/ and existing English section URLs are preserved. Persian, Arabic, Chinese and French use /fa/, /ar/, /zh/ and /fr/. Each page is static HTML.
 
 ## Editing the site
 

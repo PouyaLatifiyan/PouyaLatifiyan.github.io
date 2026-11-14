@@ -1,5 +1,6 @@
 // Old bookmarks on the original single-page site.
 const sections = {
+  home:'en/', framework:'research/#framework', contact:'en/#contact',
   about: 'biography/', education: 'biography/#education', experience: 'biography/#experience',
   publications: 'biography/#publications', projects: 'biography/#projects',
   skills: 'biography/#skills', awards: 'credentials/#awards'

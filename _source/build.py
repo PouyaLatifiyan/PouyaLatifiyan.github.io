@@ -14,6 +14,8 @@ for people in GROUPS.values():
 # Optional records: {"father": {"fa": {"name":"…", "paragraphs":["…"]}}}
 records = json.loads((ROOT/'_source/family.json').read_text())
 def path(lang, page):
+    if page == 'home':
+        return f'/{lang}/'
     return ('/' if lang == 'en' else '/'+lang+'/') + SLUG[page]
 def link(url, label, cls=''):
     return f'<a class="{cls}" href="{escape(url,quote=True)}">{label}</a>'
@@ -29,31 +31,15 @@ def label(value):
     return f'<p class="eyebrow">{value}</p>'
 def sub(title, intro, tag='', action=''):
     return f'<div class="subhero">{label(tag) if tag else ""}<h1>{title}</h1><p class="intro">{intro}</p>{action}</div>'
-def wave(t):
-    return f'''<figure class="instrument" data-wave>
-    <div class="instrument-head"><span class="lamp"></span><strong>{t("wave")}</strong><span class="formula" dir="ltr">Σ Aᵢ sin(ωᵢt + φᵢ)</span></div>
-    <div class="wave-window"><canvas aria-label="{t("wave")}" role="img"></canvas></div>
-    <figcaption><span>{t("sim")}</span>{motion_button(t)}</figcaption></figure>'''
-def motion_button(t):
-    return f'<button type="button" class="motion" data-pause="{t("pause")}" data-play="{t("play")}" hidden>{t("pause")}</button>'
-def detector(t):
-    attrs=' '.join(f'data-{k}="{t(k)}"' for k in ('alarm','early','late','miss','deadline'))
-    return f'''<section class="section lab" id="laboratory" {attrs}>
-    <div>{label(t("sim"))}<h2>{t("lab")}</h2><p class="intro">{t("simtext")}</p></div>
-    <div class="scope"><div class="instrument-head"><span class="lamp"></span><strong>{t("demo")}</strong>{motion_button(t)}</div>
-    <div class="trace-window"><canvas role="img" aria-label="{t("signal")}"></canvas></div>
-    <div class="controls"><label for="threshold">{t("level")}</label><output id="level" for="threshold">0.65</output>
-    <input id="threshold" type="range" min="25" max="125" step="1" value="65" dir="ltr">
-    <div class="readout"><span>{t("deadline")} <bdi>8.00 s</bdi></span><strong id="outcome" aria-live="polite"></strong></div></div></div></section>'''
 def home(l,t):
-    actions=button('#laboratory',t('demo'))+link(path(l,'research'),t('current')+' '+arrow(),'quiet')
-    hero=f'<section class="hero" id="home"><div class="hero-copy">{label(t("scope"))}<h1>{t("name")}</h1><p class="intro">{t("identity")}</p><div class="actions">{actions}</div></div>{wave(t)}</section>'
+    actions=button(path(l,'research'),t('current'))+link(path(l,'bio'),t('readbio'),'quiet')
+    hero=f'<section class="hero" id="home"><div class="hero-copy">{label(t("scope"))}<h1>{t("name")}</h1><p class="intro">{t("identity")}</p><div class="actions">{actions}</div></div></section>'
     items = [(t('doctoral'),t('degree')),('Beihang University',t('school')),(t('advisor'),'<bdi>Prof. Yanhong Kou</bdi>')]
     affil = '<div class="affil">'+''.join(f'<div><span class="caption">{a}</span><strong>{b}</strong></div>' for a,b in items)+'</div>'
     framework = f'<section class="section feature" id="framework"><div>{label(t("current"))}<span class="display" lang="en">Alert</span></div><div><h2>{t("framework")}</h2><p class="intro">{t("alertintro")}</p><p class="domains"><span class="caption">{t("applications")}</span>{t("domains")}</p></div></section>'
     future = ''.join(f'<article class="card"><h3>{t(k)}</h3><p>{t(d)}</p></article>' for k,d in [('ai','aitext'),('quantum','qtext')])
     highlights='<section class="section"><div class="sectionline"><h2>'+t('portfolio')+'</h2>'+link(path(l,'portfolio'),t('portfolio')+' '+arrow(),'quiet')+'</div><div class="cards">'+project_cards(l,t)+'</div></section>'
-    return hero+affil+framework+detector(t)+highlights+f'<section class="section"><h2>{t("future")}</h2><div class="cards">{future}</div></section>'
+    return hero+affil+framework+highlights+f'<section class="section"><h2>{t("future")}</h2><div class="cards">{future}</div></section>'
 def project_cards(l,t):
     entries=[('Mahbot1 · NASA Astrobee','mah','astrobee'),('NASA Impact Visual Analysis System','nivas','impact')]
     return ''.join(f'<article class="card project"><div class="diagram {art}" aria-hidden="true"><span></span><i></i><b></b></div><div class="card-copy"><h3 dir="ltr">{name}</h3><p>{t(desc)}</p></div></article>' for name,desc,art in entries)
@@ -95,9 +81,9 @@ def family(l,t,p):
     text='</p><p class="intro">'.join(escape(s) for s in record.get('paragraphs',[])) or t('empty')
     return sub(escape(record.get('name',t(p))),text,t('family')+' / '+t(p),'<div class="actions">'+link(path(l,'family'),t('familytitle')+' '+arrow(),'quiet')+'</div>')
 def research_page(l,t):
-    return sub(t('current'),t('identity'),t('scope'))+section('Alert','<h3>'+t('framework')+'</h3><p class="intro">'+t('alertintro')+'</p><p class="domains">'+t('domains')+'</p>','framework')+detector(t)+section(t('future'),entry(t('ai'),t('aitext'))+entry(t('quantum'),t('qtext')),'future')
+    return sub(t('current'),t('identity'),t('scope'))+section('Alert','<h3>'+t('framework')+'</h3><p class="intro">'+t('alertintro')+'</p><p class="domains">'+t('domains')+'</p>','framework')+section(t('future'),entry(t('ai'),t('aitext'))+entry(t('quantum'),t('qtext')),'future')
 def project_page(l,t):
-    return sub(t('portfolio'),t('biotitle'),t('name'))+section('Alert',t('alertintro')+'<div class="actions">'+button(path(l,'research')+'#laboratory',t('demo'))+'</div>','alert')+'<div class="cards">'+project_cards(l,t)+'</div><div class="actions">'+link('https://github.com/lunex-project-2025/NIVAS','NIVAS · GitHub '+arrow(),'quiet')+'</div>'
+    return sub(t('portfolio'),t('biotitle'),t('name'))+section('Alert',t('alertintro')+'<div class="actions">'+button(path(l,'research')+'#framework',t('current'))+'</div>','alert')+'<div class="cards">'+project_cards(l,t)+'</div><div class="actions">'+link('https://github.com/lunex-project-2025/NIVAS','NIVAS · GitHub '+arrow(),'quiet')+'</div>'
 def page(l,p):
     def t(k): return escape(TEXT[k][l])
     url=BASE+path(l,p)
@@ -105,7 +91,8 @@ def page(l,p):
     title=(t('name')+' | '+t('field')+' · Beihang University') if p=='home' else (t('home' if p=='research' else p)+' | '+t('name'))
     descr=t({'home':'intro','bio':'story','docs':'docintro','family':'familyintro','research':'alertintro','portfolio':'identity','papers':'pub','notes':'noteTitle'}.get(p,'empty'))
     alt=''.join(f'<link rel="alternate" hreflang="{a}" href="{BASE+path(a,p)}">' for a in LANGS)
-    alt+=f'<link rel="alternate" hreflang="x-default" href="{BASE+path("en",p)}">'
+    default_url=BASE+('/' if p=='home' else path('en',p))
+    alt+=f'<link rel="alternate" hreflang="x-default" href="{default_url}">'
     langs=''.join(f'<a href="{path(a,p)}" hreflang="{a}" lang="{a}" dir="auto"'+(' aria-current="true"' if a==l else '')+f'>{NAMES[a]}</a>' for a in LANGS)
     def page_link(k):
         name=t({'home':'homepage','research':'home'}.get(k,k))
@@ -122,7 +109,7 @@ def page(l,p):
     elif p=='research': body=research_page(l,t)
     elif p=='portfolio': body=project_page(l,t)
     elif p=='papers': body=sub(t('pub'),t('name'))+'<div class="paper-list">'+publications(t)+'</div>'
-    elif p=='notes': body=sub(t('notes'),t('field'))+section(t('noteTitle'),t('noteBody')+'<div class="actions">'+button(path(l,'research')+'#laboratory',t('demo'))+'</div>','timing')
+    elif p=='notes': body=sub(t('notes'),t('field'))+section(t('noteTitle'),t('noteBody')+'<div class="actions">'+button(path(l,'research')+'#framework',t('current'))+'</div>','timing')
     elif p=='bio': body=bio(l,t)
     elif p=='docs': body=docs(t)
     else: body=family(l,t,p)
@@ -136,8 +123,8 @@ def page(l,p):
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{title}</title>
 <meta name="description" content="{descr}"><link rel="canonical" href="{url}">
 {alt}<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{title}">
-<meta property="og:description" content="{descr}"><meta property="og:image" content="{BASE}/assets/nebula.webp"><meta name="theme-color" content="#101531">
-<script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/site.css"><script defer src="/assets/interaction.js"></script>{extra}</head><body><a class="skip" href="#main">{t("skip")}</a>{head}<main id="main" class="wrap {'archive' if p!='home' else ''}">{body}</main>{footer}</body></html>
+<meta property="og:description" content="{descr}"><meta property="og:image" content="{BASE}/assets/umbra.webp"><meta name="theme-color" content="#160f17">
+<script src="/assets/theme.js?v=entrance"></script><link rel="stylesheet" href="/assets/site.css?v=umbra1"><script defer src="/assets/interaction.js?v=umbra1"></script>{extra}</head><body><a class="skip" href="#main">{t("skip")}</a>{head}<main id="main" class="wrap {'archive' if p!='home' else ''}">{body}</main>{footer}</body></html>
 '''
 from html.parser import HTMLParser
 class SearchText(HTMLParser):
@@ -152,7 +139,13 @@ class SearchText(HTMLParser):
     def handle_data(self, data):
         if self.active and data.strip(): self.words.append(data.strip())
 if __name__ == '__main__':
-    pages=[]
+    alternates=''.join(f'<link rel="alternate" hreflang="{l}" href="{BASE+path(l,"home")}">' for l in LANGS)
+    alternates+=f'<link rel="alternate" hreflang="x-default" href="{BASE}/">'
+    choices=''.join(f'<a href="{path(l,"home")}" lang="{l}" hreflang="{l}"><bdi>{NAMES[l]}</bdi></a>' for l in LANGS)
+    source=ROOT/'_source'
+    gate=(source/'entrance.html').read_text().replace('<!-- LANGUAGE_ALTERNATES -->',alternates).replace('<!-- LANGUAGE_LINKS -->',choices).replace('/* ENTRANCE_STYLE */',(source/'entrance.css').read_text())
+    (ROOT/'index.html').write_text(gate,encoding='utf-8')
+    pages=[BASE+'/']
     for lang in LANGS:
         search_index=[]
         for key in SLUG:

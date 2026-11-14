@@ -1,0 +1,41 @@
+@font-face{font-family:Name;src:url(/assets/type/name-Regular.woff) format("woff");font-display:swap}
+@font-face{font-family:Name;src:url(/assets/type/name-Italic.woff) format("woff");font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html{background:#100c12;color:#fff5eb}
+body{margin:0;isolation:isolate;font:16px/1.5 Arial,"Noto Sans Arabic",sans-serif}
+.universe{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 78% 46%,#49222b 0,#21131c 35%,#100c12 77%)}
+.eclipse{position:absolute;inset:-7% -8% -8% 9%;background:url(/assets/umbra.webp) 77% 49% / cover no-repeat;mask-image:linear-gradient(90deg,transparent,#000 38%);animation:drift 22s ease-in-out infinite alternate}
+.transmission{position:absolute;width:105vw;height:49vw;left:26%;top:3%;transform:rotate(-26deg);pointer-events:none}
+.transmission i{position:absolute;inset:0;border-radius:50%;border:1px solid #f8b29730}
+.transmission i:nth-child(2){inset:4% -1%;border-color:#f8b29716}
+.transmission i:nth-child(3){inset:8% -2%;border-color:#f8b29713}
+.transmission i:first-child:after{content:"";position:absolute;left:0;top:0;width:5px;height:5px;border-radius:100%;background:#ffce99;box-shadow:0 0 12px #ff9c66;offset-path:ellipse(50% 50% at 50% 50%);animation:travel 17s linear infinite}
+main{min-height:100vh;min-height:100svh;max-width:1700px;margin:auto;padding:clamp(28px,6vh,70px) clamp(24px,7.5vw,150px) clamp(35px,7vh,90px);display:flex;flex-direction:column;align-items:flex-start}
+.signature{position:relative;width:41px;height:41px;flex:none}
+.signature i,.signature b{position:absolute;left:2px;top:8px;width:35px;height:23px;transform:rotate(-38deg);border:1.4px solid #f4bc96;border-radius:50%}
+.signature b{width:23px;height:35px;left:8px;top:2px}
+.identity{margin:auto 0;padding:clamp(64px,12vh,140px) 0 48px}
+h1{font:400 clamp(110px,11.4vw,205px)/.83 Name,"Times New Roman",serif;letter-spacing:-.045em;margin:0;text-shadow:0 2px 28px #140b122d}
+h1 em{display:block;font-weight:400;color:#ffc39f;padding:0 .12em .05em 0}
+.identity p{margin:clamp(19px,4vh,45px) 0 0;font:400 clamp(18px,1.7vw,29px)/1.45 Georgia,serif;color:#f5e4de}
+nav{width:min(770px,94%);border-top:1px solid #f3c2a651;padding-top:19px}
+h2{font-size:10px;text-transform:uppercase;letter-spacing:.22em;font-weight:600;color:#dbb9a9;margin:0 0 12px}
+.languages{display:flex;flex-wrap:wrap;gap:7px 10px}
+.languages a{display:inline-flex;align-items:center;justify-content:center;gap:13px;color:#faf0e9;text-decoration:none;min-height:44px;padding:7px 18px;background:#211922d9;border:1px solid #98746585;border-radius:4px;font-size:16px;transition:background .2s,border-color .2s}
+.languages a:hover,.languages a:focus-visible{background:#522d31;border-color:#f9b996}
+.languages a:after{content:"↗";color:#e3a982;font:13px Arial}
+:focus-visible{outline:2px solid #ffd0b2;outline-offset:4px}
+.motion{position:fixed;right:clamp(14px,3vw,60px);top:clamp(22px,5vh,54px);width:40px;height:40px;background:#21172399;color:#f8ddd0;border:1px solid #aa86786e;border-radius:50%;font-size:15px;cursor:pointer}
+@keyframes drift{from{transform:translate(-1.8%,1.3%) scale(1.01)}to{transform:translate(2.4%,-1.5%) scale(1.065)}}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+[data-paused=true] .eclipse,[data-paused=true] .transmission i:first-child:after{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){html:not([data-paused=false]) .eclipse,html:not([data-paused=false]) .transmission i:first-child:after{animation-play-state:paused}}
+@media(max-width:700px){.eclipse{inset:0 -36% 15% -11%;background-position:62% 36%;mask-image:linear-gradient(#000 53%,transparent)}.transmission{width:150vw;height:90vw;left:6%;top:12%}.identity{padding-top:max(145px,19vh)}h1{font-size:clamp(89px,19vw,132px)}main{padding:25px 7vw 35px}.identity p{font-size:19px}nav{width:100%}.languages{gap:8px}.languages a{padding:6px 13px;gap:8px}.signature{transform:scale(.8);transform-origin:0 0}}
+@media(max-height:520px) and (min-width:701px){.identity{padding:26px 0}h1{font-size:84px}.identity p{margin-top:12px}}
+
+.wake{position:absolute;right:-11%;bottom:8%;width:84%;height:27%;opacity:.46;transform:rotate(-11deg);animation:undulate 8s ease-in-out infinite alternate}
+.wake use{stroke-width:1.2}
+@keyframes undulate{from{transform:rotate(-12deg) translate(-2%,3%) scaleY(.82)}to{transform:rotate(-8deg) translate(2%,-5%) scaleY(1.22)}}
+[data-paused=true] .wake{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){html:not([data-paused=false]) .wake{animation-play-state:paused}}
+@media(max-width:700px){.wake{width:110%;height:22%;bottom:28%;right:-28%;opacity:.32}}
