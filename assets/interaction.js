@@ -96,7 +96,7 @@ if (lab) {
       ctx.setLineDash(dash); ctx.strokeStyle=color; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.setLineDash([]);
     }
-    ctx.font='11px monospace'; ctx.fillStyle='#c9d6ef';ctx.textAlign='center';
+    ctx.direction='ltr'; ctx.font='11px monospace'; ctx.fillStyle='#c9d6ef';ctx.textAlign='center';
     for (let i=0;i<=12;i+=2) {
       line(x(i),14,x(i),h-24,'#2e3958'); ctx.fillText(i+' s',x(i),h-6);
     }
