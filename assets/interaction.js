@@ -6,7 +6,7 @@ if ('IntersectionObserver' in window) {
       observer.unobserve(entry.target);
     }
   }, {threshold:0});
-  document.querySelectorAll('.section,.entry,.project,.subhero,.hero-copy,.affil,.linkrow').forEach(el => observer.observe(el));
+  document.querySelectorAll('.section,.entry,.honour,.project,.subhero,.hero-copy,.affil,.linkrow').forEach(el => observer.observe(el));
 }
 const searchButton = document.querySelector('.search-toggle');
 const dialog = document.querySelector('#search-dialog');
@@ -30,7 +30,7 @@ searchButton.addEventListener('click',async()=>{
   if(!pages) {
     const fallback = [...document.querySelectorAll('.footpages a')].map(a=>({title:a.textContent,url:a.href,text:''}));
     try {
-      const response=await fetch('/assets/search-'+document.documentElement.lang+'.json?v=umbra1');
+      const response=await fetch('/assets/search-'+document.documentElement.lang+'.json?v=motion2');
       if(!response.ok) throw Error(response.status);
       pages=await response.json();
     } catch {pages=fallback;}
@@ -38,3 +38,8 @@ searchButton.addEventListener('click',async()=>{
   matches();
 });
 input.addEventListener('input',()=>{if(pages)matches();});
+
+const header = document.querySelector('header');
+new ResizeObserver(() => {
+  document.documentElement.style.setProperty('--header-offset', (header.offsetHeight + 14) + 'px');
+}).observe(header);

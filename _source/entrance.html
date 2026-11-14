@@ -9,7 +9,7 @@
 <link rel="preload" href="/assets/type/name-Regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/assets/type/name-Italic.woff" as="font" type="font/woff" crossorigin>
 <style>/* ENTRANCE_STYLE */</style><script defer src="/assets/legacy.js?v=entrance"></script></head>
 <body>
-<div class="universe" aria-hidden="true"><div class="eclipse"></div><svg class="wake" viewBox="0 0 1200 280" preserveAspectRatio="none" fill="none"><defs><linearGradient id="spectrum"><stop stop-color="#e88162" stop-opacity="0"/><stop offset=".32" stop-color="#e38971"/><stop offset=".7" stop-color="#ffd29a"/><stop offset="1" stop-color="#fcb6a3" stop-opacity="0"/></linearGradient><path id="crest" d="M-70 170 C130 320 245 17 430 155 S710 242 840 106 S1060 90 1270 120"/></defs><g stroke="url(#spectrum)"><use href="#crest"/><use href="#crest" transform="translate(5 8)"/><use href="#crest" transform="translate(10 16)"/><use href="#crest" transform="translate(15 24)"/><use href="#crest" transform="translate(20 32)"/><use href="#crest" transform="translate(25 40)"/></g></svg><div class="transmission"><i></i><i></i><i></i></div></div>
+<div class="universe" aria-hidden="true"><div class="eclipse"></div><video class="pulse-film" muted loop playsinline preload="none" disablepictureinpicture data-src="/assets/pulse-transit.mp4"></video><svg class="wake" viewBox="0 0 1200 280" preserveAspectRatio="none" fill="none"><defs><linearGradient id="spectrum"><stop stop-color="#e88162" stop-opacity="0"/><stop offset=".32" stop-color="#e38971"/><stop offset=".7" stop-color="#ffd29a"/><stop offset="1" stop-color="#fcb6a3" stop-opacity="0"/></linearGradient><path id="crest" d="M-70 170 C130 320 245 17 430 155 S710 242 840 106 S1060 90 1270 120"/></defs><g stroke="url(#spectrum)"><use href="#crest"/><use href="#crest" transform="translate(5 8)"/><use href="#crest" transform="translate(10 16)"/><use href="#crest" transform="translate(15 24)"/><use href="#crest" transform="translate(20 32)"/><use href="#crest" transform="translate(25 40)"/></g></svg><div class="transmission"><i></i><i></i><i></i></div></div>
 <main>
 <div class="signature" aria-hidden="true"><i></i><b></b></div>
 <section class="identity"><h1>Pouya <em>Latifiyan</em></h1><p>Between a signal and a decision.</p></section>
@@ -19,13 +19,25 @@
 <script>
 const button = document.querySelector('.motion');
 const preference = matchMedia('(prefers-reduced-motion: reduce)');
+const film = document.querySelector('.pulse-film');
+function syncFilm() {
+  if (document.documentElement.dataset.paused === 'true' || document.hidden) {
+    film.pause();
+    return;
+  }
+  if (!film.hasAttribute('src')) film.src = film.dataset.src;
+  film.play().catch(() => {});
+}
+film.addEventListener('playing', () => film.classList.add('playing'));
+film.addEventListener('error', () => film.classList.remove('playing'));
+document.addEventListener('visibilitychange', syncFilm);
 function setPaused(paused) {
   document.documentElement.dataset.paused = String(paused);
   button.setAttribute('aria-pressed', String(paused));
   button.setAttribute('aria-label', paused ? 'Play background animation' : 'Pause background animation');
-  button.firstElementChild.textContent = paused ? '▷' : 'Ⅱ';
+  syncFilm();
 }
-setPaused(preference.matches);
+setPaused(preference.matches || Boolean(navigator.connection?.saveData));
 button.hidden = false;
 button.addEventListener('click', () => setPaused(button.getAttribute('aria-pressed') !== 'true'));
 preference.addEventListener('change', () => setPaused(preference.matches));

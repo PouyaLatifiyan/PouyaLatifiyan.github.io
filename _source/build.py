@@ -36,10 +36,10 @@ def home(l,t):
     hero=f'<section class="hero" id="home"><div class="hero-copy">{label(t("scope"))}<h1>{t("name")}</h1><p class="intro">{t("identity")}</p><div class="actions">{actions}</div></div></section>'
     items = [(t('doctoral'),t('degree')),('Beihang University',t('school')),(t('advisor'),'<bdi>Prof. Yanhong Kou</bdi>')]
     affil = '<div class="affil">'+''.join(f'<div><span class="caption">{a}</span><strong>{b}</strong></div>' for a,b in items)+'</div>'
-    framework = f'<section class="section feature" id="framework"><div>{label(t("current"))}<span class="display" lang="en">Alert</span></div><div><h2>{t("framework")}</h2><p class="intro">{t("alertintro")}</p><p class="domains"><span class="caption">{t("applications")}</span>{t("domains")}</p></div></section>'
+    framework = f'<section class="section feature" id="framework"><div>{label(t("current"))}<span class="display" lang="en">Alert</span><div class="signal-arc" aria-hidden="true"><i></i><i></i><i></i><b></b></div></div><div><h2>{t("framework")}</h2><p class="intro">{t("alertintro")}</p><p class="domains"><span class="caption">{t("applications")}</span>{t("domains")}</p></div></section>'
     future = ''.join(f'<article class="card"><h3>{t(k)}</h3><p>{t(d)}</p></article>' for k,d in [('ai','aitext'),('quantum','qtext')])
     highlights='<section class="section"><div class="sectionline"><h2>'+t('portfolio')+'</h2>'+link(path(l,'portfolio'),t('portfolio')+' '+arrow(),'quiet')+'</div><div class="cards">'+project_cards(l,t)+'</div></section>'
-    return hero+affil+framework+highlights+f'<section class="section"><h2>{t("future")}</h2><div class="cards">{future}</div></section>'
+    return hero+affil+awards_showcase(l,t)+framework+highlights+f'<section class="section"><h2>{t("future")}</h2><div class="cards">{future}</div></section>'
 def project_cards(l,t):
     entries=[('Mahbot1 · NASA Astrobee','mah','astrobee'),('NASA Impact Visual Analysis System','nivas','impact')]
     return ''.join(f'<article class="card project"><div class="diagram {art}" aria-hidden="true"><span></span><i></i><b></b></div><div class="card-copy"><h3 dir="ltr">{name}</h3><p>{t(desc)}</p></div></article>' for name,desc,art in entries)
@@ -66,9 +66,25 @@ def publications(t):
             details += ' · '+link('https://doi.org/'+identifier,'DOI '+identifier)
         pubs += entry(f'<bdi lang="en">{escape(title)}</bdi>', details)
     return pubs
+def distinctions(t):
+    profile = 'https://www.linkedin.com/in/pouya-latifiyan/'
+    return [
+        ('2026', t('award1'), 'Asia Simulation Federation International Summer School', t('team'), profile),
+        ('2025', t('award2'), 'LuneX · NIVAS · NASA Space Apps Tokyo', t('team'), '/CV.pdf'),
+        ('2025', t('commend'), '6th Kibo Robot Programming Challenge', t('teamreport'), 'https://eg.linkedin.com/in/mnar-hmdy-0680672aa'),
+        ('2017', t('award3'), t('olymstages'), t('recognition'), profile),
+        ('2009', t('beststudent'), t('ministry'), t('recognition'), profile),
+    ]
+
+def awards_showcase(l,t):
+    tiles = []
+    for year,title,venue,kind,url in distinctions(t)[:3]:
+        tiles.append(f'<article class="honour"><div class="medal" aria-hidden="true"><i></i></div><span class="award-year">{year}</span><p class="award-type">{kind}</p><h3>{title}</h3><p>{venue}</p></article>')
+    return f'<section class="section honours" id="awards"><div class="sectionline"><h2>{t("awards")}</h2>{link(path(l,"docs")+"#awards",t("full_awards")+" "+arrow(),"quiet")}</div><div class="honour-grid">{"".join(tiles)}</div></section>'
+
 def docs(t):
     top=sub(t('docs'),t('docintro'),t('name'),'<div class="actions">'+button('/CV.pdf',t('cv')+' · PDF')+'</div>')
-    awards=entry(t('award1'),'Asia Simulation Federation International Summer School','2026.07')+entry(t('award2'),'NASA Space Apps Challenge · Tokyo','2025.10')+entry(t('award3'),t('olym'),'2017.07')
+    awards=''.join(entry(title,venue+'<br>'+link(url,t('teamreport') if kind==t('teamreport') else ('CV · PDF' if url.endswith('.pdf') else t('profile'))),year) for year,title,venue,kind,url in distinctions(t))
     return top+section(t('edu'),education(t),'education')+section(t('awards'),awards,'awards')
 def family(l,t,p):
     if p=='family':
@@ -98,6 +114,7 @@ def page(l,p):
         name=t({'home':'homepage','research':'home'}.get(k,k))
         return f'<a href="{path(l,k)}"'+(' aria-current="page"' if p==k else '')+f'>{name}</a>'
     nav=''.join(page_link(k) for k in ('home','research','portfolio','papers'))
+    nav+=link(path(l,'home')+'#awards',t('awards'))
     more=''.join(page_link(k) for k in ('bio','docs','family','notes'))+link('#contact',t('contact'))
     theme='<label class="theme"><span aria-hidden="true">◐</span><select aria-label="'+t('theme')+'" id="theme">'+''.join(f'<option value="{k}">{t(k)}</option>' for k in ('system','light','dark'))+'</select></label>'
     search=f'''<button class="search-toggle" hidden aria-label="{t('search')}">⌕</button><dialog id="search-dialog"><form method="dialog"><label for="query">{t('search')}</label><button aria-label="{t('close')}">×</button></form><input type="search" id="query" placeholder="{t('search')}" autocomplete="off"><div id="results" data-empty="{t('nothing')}"></div></dialog>'''
@@ -124,7 +141,7 @@ def page(l,p):
 <meta name="description" content="{descr}"><link rel="canonical" href="{url}">
 {alt}<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{title}">
 <meta property="og:description" content="{descr}"><meta property="og:image" content="{BASE}/assets/umbra.webp"><meta name="theme-color" content="#160f17">
-<script src="/assets/theme.js?v=entrance"></script><link rel="stylesheet" href="/assets/site.css?v=umbra1"><script defer src="/assets/interaction.js?v=umbra1"></script>{extra}</head><body><a class="skip" href="#main">{t("skip")}</a>{head}<main id="main" class="wrap {'archive' if p!='home' else ''}">{body}</main>{footer}</body></html>
+<script src="/assets/theme.js?v=entrance"></script><link rel="stylesheet" href="/assets/site.css?v=motion2"><script defer src="/assets/interaction.js?v=motion2"></script>{extra}</head><body><a class="skip" href="#main">{t("skip")}</a>{head}<main id="main" class="wrap {'archive' if p!='home' else ''}">{body}</main>{footer}</body></html>
 '''
 from html.parser import HTMLParser
 class SearchText(HTMLParser):
