@@ -30,7 +30,7 @@ searchButton.addEventListener('click',async()=>{
   if(!pages) {
     const fallback = [...document.querySelectorAll('.footpages a')].map(a=>({title:a.textContent,url:a.href,text:''}));
     try {
-      const response=await fetch('/assets/search-'+document.documentElement.lang+'.json?v=motion2');
+      const response=await fetch('/assets/search-'+document.documentElement.lang+'.json?v=heritage1');
       if(!response.ok) throw Error(response.status);
       pages=await response.json();
     } catch {pages=fallback;}
@@ -43,3 +43,19 @@ const header = document.querySelector('header');
 new ResizeObserver(() => {
   document.documentElement.style.setProperty('--header-offset', (header.offsetHeight + 14) + 'px');
 }).observe(header);
+
+const menu = document.querySelector('.menu');
+const toggle = menu.querySelector('summary');
+document.addEventListener('click', event => {
+  if (menu.open && (!menu.contains(event.target) || event.target.closest('a'))) menu.open = false;
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !dialog.open && menu.open) {
+    menu.open = false;
+    toggle.focus();
+  }
+});
+dialog.addEventListener('close', () => {
+  if (menu.open) searchButton.focus();
+  else toggle.focus();
+});

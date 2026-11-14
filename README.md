@@ -1,21 +1,7 @@
-# PouyaLatifiyan.github.io
-Professional CV and Portfolio Website - Pouya Latifiyan
+# Pouya Latifiyan
 
-The root URL is a language entrance. The English homepage uses /en/ and existing English section URLs are preserved. Persian, Arabic, Chinese and French use /fa/, /ar/, /zh/ and /fr/. Each page is static HTML.
+The root is the five-language entrance. The English homepage uses /en/ and English section pages use their original URLs. Other languages use /fa/, /ar/, /zh/ and /fr/.
 
-## Editing the site
+Edit shared copy in `_source/translations.py` and family names, relationships, biographies, sources and art text in `_source/heritage.py`. Parent links point from each child to their known parents. The generator derives child and sibling links from them. Family relationships follow Pouya’s account.
 
-Edit the five language versions in `_source/translations.py`. The layout and bibliography are in `_source/build.py`. To add a family biography, edit `_source/family.json`, using a person's route key and the language of the text. For example:
-
-```json
-{
-  "father": {
-    "fa": {
-      "name": "نام",
-      "paragraphs": ["بند نخست زندگی‌نامه"]
-    }
-  }
-}
-```
-
-Run `python3 -B _source/build.py` and commit the source and generated pages together. A family biography enters the sitemap when it has text in that language.
+Run `python3 -B _source/build.py` and commit the source, generated HTML, search indexes and sitemap together. The art section’s historical illustration is The Met’s open-access object 1999.356, credited on the page.
